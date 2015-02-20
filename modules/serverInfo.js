@@ -9,7 +9,7 @@ let ServerInfo = (function () {
     }
     
     ServerInfo.prototype.getUrl = function() {
-        var url = this.protocol + "://" + this.domain + ":" + this.protocol;
+        var url = this.protocol + "://" + this.domain + ":" + this.port;
         return url;
     };
     
@@ -17,8 +17,8 @@ let ServerInfo = (function () {
     
 })();
 
-let api = api || {};
-let communication = communication || {};
+var api = api || {};
+var communication = communication || {};
 
 api.communication = communication;
 api.communication.ServerInfo = ServerInfo;
