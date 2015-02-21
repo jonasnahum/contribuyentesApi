@@ -1,6 +1,6 @@
 "use strict";
 
-const m = require("./../modules/endPoint.js");
+const m = require("./../communication/endPoint.js");
 exports.getUrlTest = function(test) {
     test.expect(3);
     let expected1 = "contribuyentes/actualizar/1/rev003";

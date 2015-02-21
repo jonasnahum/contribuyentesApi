@@ -1,5 +1,5 @@
 "use strict";
-const m =  require("./../modules/serverInfo.js");
+const m =  require("./../communication/serverInfo.js");
 exports.getUrlTest = function (test){
     test.expect (1);
     //arrange

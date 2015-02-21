@@ -1,0 +1,32 @@
+{
+  "name": "contribuyentesApi",
+  "version": "1.0.0",
+  "description": "escucha requests de http para almacenar contribuyentes",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node --harmony $(which nodeunit) test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonasnahum/contribuyentesApi.git"
+  },
+  "keywords": [
+    "api",
+    "contribuyentes",
+    "sat",
+    "méxico"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonasnahum/contribuyentesApi/issues"
+  },
+  "homepage": "https://github.com/jonasnahum/contribuyentesApi",
+  "dependencies": {
+    "express": "^4.11.2",
+    "request": "^2.53.0"
+  }
+}
