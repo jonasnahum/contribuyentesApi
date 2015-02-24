@@ -5,19 +5,12 @@ exports.requestTest =  function (test) {
     
     let EndPoint = require ("./../communication/endPoint.js").init();
     let ServerInfo = require ("./../communication/serverInfo.js").init();
-    let QMock = require ("./mocks/qMock.js").init();
-    
-    /*
-        let q = new QMock(test);
-    */
     
     let RequestMock = require ("./mocks/requestMock.js").init(test);
-    let request = new RequestMock();
-    let Request = require ("./../communication/request.js").init(null, request);
-
-
+    let mock = new RequestMock();
+    let Request = require ("./../communication/request.js").init(null, mock);
     
-    //arrange.
+    // arrange.
     let serverInfo = new ServerInfo("http", "mercadoUruapan.com", 80);
     let endPointPost =  new EndPoint({
         uri: "clientes/guardar",
@@ -46,7 +39,7 @@ exports.requestTest =  function (test) {
         httpMethod: "DELETE"
     });
     
-    // assert
+    // act
     let instance = new Request({ serverInfo: serverInfo, endPoint: endPointPost });
     let promise1 = instance.getRequest();
     
@@ -62,6 +55,7 @@ exports.requestTest =  function (test) {
     let instance5 = new Request({ serverInfo: serverInfo, endPoint: endPointDelete });
     let promise2 = instance5.getRequest();
     
+    // assert
     promise1.fail(function(err) {
         let expected = new Error("No se encontró el servidor");
         test.deepEqual(err, expected);
