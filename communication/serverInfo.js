@@ -1,6 +1,7 @@
 "use strict";
 
-let ServerInfo = (function () { 
+
+function init () { 
 
     function ServerInfo(protocol, domain, port){
         this.protocol = protocol;
@@ -15,12 +16,6 @@ let ServerInfo = (function () {
     
     return ServerInfo;
     
-})();
+}
 
-var api = api || {};
-var communication = communication || {};
-
-api.communication = communication;
-api.communication.ServerInfo = ServerInfo;
-
-exports.api = api;
+exports.init = init;

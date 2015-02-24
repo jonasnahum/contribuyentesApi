@@ -1,6 +1,6 @@
 "use strict";
 
-let EndPoint = (function () {
+function init () {
     function EndPoint(config) {
         if (!config)
             throw new Error("config is missing.");
@@ -40,13 +40,6 @@ let EndPoint = (function () {
         
     };
     return EndPoint; 
-})();
+}
 
-
-var api = api || {};
-var communication = communication || {};
-
-api.communication = communication;
-api.communication.EndPoint = EndPoint;
-
-exports.api = api;
+exports.init = init;

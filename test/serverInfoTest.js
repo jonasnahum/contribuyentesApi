@@ -1,5 +1,5 @@
 "use strict";
-const m =  require("./../communication/serverInfo.js");
+const ServerInfo =  require("./../communication/serverInfo.js").init();
 exports.getUrlTest = function (test){
     test.expect (1);
     //arrange
@@ -8,7 +8,7 @@ exports.getUrlTest = function (test){
     let port = 80;
     let protocol = "http";
     let expected = "http://mercadouruapan.com:80";
-    let instance = new m.api.communication.ServerInfo(protocol,domain,port);
+    let instance = new ServerInfo(protocol,domain,port);
     //act
     
     let actual = instance.getUrl();
