@@ -48,7 +48,6 @@ exports.contribuyenteModelTest = function(test) {
         estado: 5
     };
     model = new Contribuyente(baseConfig, config);
-    console.dir(model.errors.length);
     test.equal(model.isValid(), true);
     
     

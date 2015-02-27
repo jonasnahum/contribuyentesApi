@@ -1,12 +1,12 @@
 "use strict";
-
+let MissingConfigError = require ("./errors/missingConfigError.js").init();
 function init (q, request){
     q = q || require ("q");
     request = request || require ("request");
     
     let Request = function(config) {
         if (!config)
-            throw new Error("config is missing");
+            throw new MissingConfigError();
             
         this.serverInfo = config.serverInfo || null;
         this.endPoint = config.endPoint || null;
@@ -37,7 +37,7 @@ function init (q, request){
         return config;
     };
     
-    Request.prototype.getRequest = function () {
+    Request.prototype.getPromise = function () {
         let deferred = q.defer();
         let httpMethod = this._getHttpMethod();
         let config = this._getRequestConfig();

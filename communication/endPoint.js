@@ -1,9 +1,9 @@
 "use strict";
-
+let MissingConfigError = require ("./errors/missingConfigError.js").init();
 function init () {
     function EndPoint(config) {
         if (!config)
-            throw new Error("config is missing.");
+            throw new MissingConfigError();
         
         this.uri = config.uri || "";
         this.httpMethod = config.httpMethod || "GET";

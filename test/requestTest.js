@@ -41,19 +41,19 @@ exports.requestTest =  function (test) {
     
     // act
     let instance = new Request({ serverInfo: serverInfo, endPoint: endPointPost });
-    let promise1 = instance.getRequest();
+    let promise1 = instance.getPromise();
     
     let instance2 = new Request({ serverInfo: serverInfo, endPoint: endPointGet });
-    instance2.getRequest();
+    instance2.getPromise();
     
     let instance3 = new Request({ serverInfo: serverInfo, endPoint: endPointNada });
-    instance3.getRequest();
+    instance3.getPromise();
     
     let instance4 = new Request({ serverInfo: serverInfo, endPoint: endPointPut });
-    instance4.getRequest();
+    instance4.getPromise();
     
     let instance5 = new Request({ serverInfo: serverInfo, endPoint: endPointDelete });
-    let promise2 = instance5.getRequest();
+    let promise2 = instance5.getPromise();
     
     // assert
     promise1.fail(function(err) {
