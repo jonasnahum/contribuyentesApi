@@ -46,8 +46,8 @@ exports.init = function (){
             this._addError("nombre", "El nombre es requerido.");
         if (validator.isStringEmpty(this.email))
             this._addError("email", "El email es requerido.");
-        if (!validator.regex(this.email, /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/))
-            this._addError("email", "El email no es válido");
+        // if (!validator.regex(this.email, /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/))
+        //     this._addError("email", "El email no es válido");
         if (validator.isStringEmpty(this.calle))
             this._addError("calle", "La calle es requerida.");
         if (validator.isStringEmpty(this.numeroExterior))
