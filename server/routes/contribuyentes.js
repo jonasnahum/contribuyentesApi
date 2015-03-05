@@ -14,6 +14,7 @@ exports.init = function (express, db) {
     
     ContribuyentesController.prototype.register = function () {
         this.router.post('/crear', function(req, res, next) {
+
             req.accepts('application/json');
             
             let model = new Model({}, req.body);
@@ -23,7 +24,8 @@ exports.init = function (express, db) {
                 res.status(502).json(model.errors);
                 return;
             } 
-                
+            
+    
             let endPoint = db.getEndPoint("POST", "contribuyentes", null, model.addDate(req.body, true));
             let request = db.getRequest(endPoint);
             let promise = request.getPromise();
