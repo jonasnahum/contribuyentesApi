@@ -1,7 +1,7 @@
 "use strict";
 
 exports.init = function (express, db) {
-    var Database = require("./../../communications/database.js").init();
+    var Database = require("./../../communication/database.js").init();
     var Model = require("./../models/contribuyentesModel.js").init();
     
     express = express || require('express');
