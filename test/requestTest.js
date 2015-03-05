@@ -6,7 +6,7 @@ exports.requestTest =  function (test) {
     let EndPoint = require ("./../communication/endPoint.js").init();
     let ServerInfo = require ("./../communication/serverInfo.js").init();
     
-    let RequestMock = require ("./mocks/requestMock.js").init(test);
+    let RequestMock = require ("./mocks/requestModuleMock.js").init(test);
     let mock = new RequestMock();
     let Request = require ("./../communication/request.js").init(null, mock);
     

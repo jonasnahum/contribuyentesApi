@@ -77,8 +77,8 @@ exports.init = function (){
         if (isNew)
             model.fechaCreado = Date.now();
         else {
-            model._id = this._id;
-            model._rev = this._rev;
+            model.id = this.id;
+            model.rev = this.rev;
         }
         
         model.fechaActualizado = Date.now();
