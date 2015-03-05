@@ -88,7 +88,7 @@ exports.init = function (express, db) {
         });
         
         /* DELETE borra un contribuyente dado su id y rev. */
-        this.router.delete('/delete/:id/:rev', function(req, res, next) {
+        this.router.delete('/borrar/:id/:rev', function(req, res, next) {
             var endPoint = db.getEndPoint("DELETE", "contribuyentes/" + req.params.id, { rev: req.params.rev }, null);
             var request = db.getRequest(endPoint);
             var promise = request.getPromise();

@@ -141,6 +141,7 @@ exports.contribuyentesControllerTest = function (test){
         };
         
         controller.router.trigger("delete", reqDel, resDel);
+        
         return def.promise;
     };
 
