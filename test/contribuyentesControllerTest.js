@@ -101,6 +101,8 @@ exports.contribuyentesControllerTest = function (test){
             status: function(code) {
                 return {
                     json: function(obj) {
+                        delete reqPut.body._id;
+                        delete reqPut.body._rev;
                         reqPut.body.id = request.documents[0].id;
                         reqPut.body.rev = request.documents[0].rev;
                         reqPut.body.fechaCreado = request.documents[0].fechaCreado;
