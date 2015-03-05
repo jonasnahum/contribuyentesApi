@@ -2,7 +2,7 @@
 
 exports.init = function (express, db) {
     var Database = require("./../../communication/database.js").init();
-    var Model = require("./../models/contribuyentesModel.js").init();
+    var Model = require("./../models/contribuyenteModel.js").init();
     
     express = express || require('express');
     db = db || new Database();
