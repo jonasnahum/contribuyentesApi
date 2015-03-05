@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var contribuyentes = require('./routes/contribuyentes');
+var ContribuyentesController = require('./routes/contribuyentes.js').init();
+var contribuyentes = new ContribuyentesController();
 
 var app = express();
 

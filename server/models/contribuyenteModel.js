@@ -27,7 +27,8 @@ exports.init = function (){
         
         ModelBase.call(this, id, rev, fechaCreado, fechaActualizado);
         this.errors = {};
-    }
+    };
+    
     ContribuyenteModel.prototype = Object.create(ModelBase.prototype);
     ContribuyenteModel.prototype.isValid = function (){
         let counter = 0;
@@ -70,6 +71,20 @@ exports.init = function (){
         }
         this.errors[field].push(message);
     };
+    
+    
+    ContribuyenteModel.prototype.addDate = function(model, isNew) {
+        if (isNew)
+            model.fechaCreado = Date.now();
+        else {
+            model._id = this._id;
+            model._rev = this._rev;
+        }
+        
+        model.fechaActualizado = Date.now();
+        
+        return model;
+    }
     
     return ContribuyenteModel;
 };

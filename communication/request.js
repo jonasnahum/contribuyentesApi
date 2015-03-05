@@ -1,12 +1,17 @@
 "use strict";
-let MissingConfigError = require ("./errors/missingConfigError.js").init();
-function init (q, request){
+
+exports.init = function(q, request, missingConfig) {
     q = q || require ("q");
     request = request || require ("request");
     
-    let Request = function(config) {
+    if (!missingConfig) {
+        var MissingConfig = require("./../errors/missingConfigError.js").init();
+        missingConfig = new MissingConfig();
+    }
+    
+    var Request = function(config) {
         if (!config)
-            throw new MissingConfigError();
+            throw missingConfig;
             
         this.serverInfo = config.serverInfo || null;
         this.endPoint = config.endPoint || null;
@@ -24,13 +29,13 @@ function init (q, request){
                 return request.del;
             default:
                 return request.get;
-        }        
+        }
     };
     
     Request.prototype._getRequestConfig = function() {
-        let config = {
+        var config = {
             url: this.serverInfo.getUrl() + "/" + this.endPoint.getUrl(),
-            form: this.endPoint.model,
+            json: this.endPoint.model,
             headers: this.endPoint.headers
         };
         
@@ -38,11 +43,11 @@ function init (q, request){
     };
     
     Request.prototype.getPromise = function () {
-        let deferred = q.defer();
-        let httpMethod = this._getHttpMethod();
-        let config = this._getRequestConfig();
+        var deferred = q.defer();
+        var httpMethod = this._getHttpMethod();
+        var config = this._getRequestConfig();
         
-        let callback = function(err, response, body) {
+        var callback = function(err, response, body) {
             if (err) {
                 deferred.reject(err);
             } else {
@@ -54,6 +59,6 @@ function init (q, request){
         
         return deferred.promise;
     };
+
     return Request;
-} 
-exports.init = init; 
+};

@@ -1,44 +1,47 @@
 "use strict";
-const express = require ("express"),
-      router = express.Router(),
-      DataBase = require ("./../models/dataBase.js").init(),
-      ContribuyenteModel = require ("./../models/contribuyenteModel.js").init();
 
-      
-let db = new DataBase();
-
-router.post('/crear', function(req, res, next){
+exports.init = function (express, db) {
+    var Database = require("./../../communications/database.js").init();
+    var Model = require("./../models/contribuyentesModel.js").init();
     
-    req.accepts('application/json');
-    let validator = new ContribuyenteModel({}, req.body);
-    validator.validate();
+    express = express || require('express');
+    db = db || new Database();
     
-    if (!validator.isValid()){
-        res.status(502).json(validator.errors);
-    } else {
-        
-        let endPoint = db.getEndPoint("POST", null, req.body, "crear");
-        let request = db.getRequest(endPoint);
-        let promise = request.getPromise();
-        
-        promise.then(function(args) {
-            let couchRes = args[0], body = args[1];
-            res.status(couchRes.statusCode).json(body);
-        });
-        
-        promise.fail(function(err, couchRes, body) {
-            res.status(502).json({ 
-                error: "bad_gateway", 
-                reason: err.code,
-                err: err,
-                couchRes: couchRes,
-                body: body
-
+    var ContribuyentesController = function() {
+        this.router = express.Router();
+        this.register();
+    };
+    
+    ContribuyentesController.prototype.register = function () {
+        this.router.post('/crear', function(req, res, next) {
+            req.accepts('application/json');
+            
+            let model = new Model({}, req.body);
+            model.validate();
+            
+            if (!model.isValid()){
+                res.status(502).json(model.errors);
+                return;
+            } 
+                
+            let endPoint = db.getEndPoint("POST", "contribuyentes", null, model.addDate(req.body, true));
+            let request = db.getRequest(endPoint);
+            let promise = request.getPromise();
+            
+            promise.then(function(args) {
+                let couchRes = args[0], body = args[1];
+                res.status(couchRes.statusCode).json(body);
+            });
+            
+            promise.fail(function(err, couchRes, body) {
+                res.status(502).json({ 
+                    error: "bad_gateway", 
+                    reason: err.code,
+                });
             });
         });
-    }
-});
-
-module.exports = router;
-
-
+    };
+    
+    return ContribuyentesController;
+};
+        

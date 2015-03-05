@@ -12,7 +12,7 @@ function init(test) {
     RequestMock.prototype.post = function(config, f) {
         
         test.equal(config.url, "http://mercadoUruapan.com:80/clientes/guardar");
-        test.deepEqual(config.form, {
+        test.deepEqual(config.json, {
             nombre: "jonas jimenez",
             edad: 29
         });
