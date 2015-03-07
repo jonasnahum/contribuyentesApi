@@ -2,7 +2,7 @@
 
 const ServerInfo = require("./../communication/serverInfo").init();
 
-exports.getUrl_allParams = function(test) {
+exports.getUrl_withPort = function(test) {
     test.expect(1);
     var expected = "https://localhost:5984";
     

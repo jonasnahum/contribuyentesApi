@@ -46,7 +46,7 @@ exports.init = function(q, request) {
             }
         };
         
-        httpMethod(config, callback);
+        httpMethod.call(request, config, callback);
         
         return deferred.promise;
     };
