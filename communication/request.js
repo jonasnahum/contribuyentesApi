@@ -1,24 +1,15 @@
 "use strict";
 
-exports.init = function(q, request, missingConfig) {
+exports.init = function(q, request) {
     q = q || require ("q");
     request = request || require ("request");
     
-    if (!missingConfig) {
-        var MissingConfig = require("./../errors/missingConfigError.js").init();
-        missingConfig = new MissingConfig();
-    }
+    var Request = function() {
     
-    var Request = function(config) {
-        if (!config)
-            throw missingConfig;
-            
-        this.serverInfo = config.serverInfo || null;
-        this.endPoint = config.endPoint || null;
     };
     
-    Request.prototype._getHttpMethod = function(){
-        switch (this.endPoint.httpMethod) {
+    Request.prototype._getHttpMethod = function(httpMethod) {
+        switch (httpMethod) {
             case 'GET':
                 return request.get;
             case 'POST':
@@ -32,20 +23,20 @@ exports.init = function(q, request, missingConfig) {
         }
     };
     
-    Request.prototype._getRequestConfig = function() {
+    Request.prototype._getRequestConfig = function(serverInfo, endPoint) {
         var config = {
-            url: this.serverInfo.getUrl() + "/" + this.endPoint.getUrl(),
-            json: this.endPoint.model,
-            headers: this.endPoint.headers
+            url: serverInfo.getUrl() + "/" + endPoint.getUrl(),
+            json: endPoint.model,
+            headers: endPoint.headers
         };
         
         return config;
     };
     
-    Request.prototype.getPromise = function () {
+    Request.prototype.getPromise = function (serverInfo, endPoint) {
         var deferred = q.defer();
-        var httpMethod = this._getHttpMethod();
-        var config = this._getRequestConfig();
+        var httpMethod = this._getHttpMethod(endPoint.httpMethod);
+        var config = this._getRequestConfig(serverInfo, endPoint);
         
         var callback = function(err, response, body) {
             if (err) {
