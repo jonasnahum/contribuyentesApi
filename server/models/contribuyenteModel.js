@@ -5,8 +5,11 @@ let validator = new Validator();
 
 exports.init = function (){
     
-    let ContribuyenteModel = function (baseConfig, config) {
+    let ContribuyenteModel = function (config, isNew) {
         
+        this._addDate(isNew);
+        
+        this.model = config;
         
         this.rfc = config && config["rfc"] ? config["rfc"] : "";
         this.nombre = config && config["nombre"] ? config["nombre"] : "";
@@ -20,16 +23,21 @@ exports.init = function (){
         this.municipio = config && config["municipio"] ? config["municipio"] : "";
         this.estado = config && config["estado"] ? config["estado"] : "";
         
-        let rev = baseConfig && baseConfig["rev"] ? baseConfig["rev"] : "";
-        let id = baseConfig && baseConfig["id"] ? baseConfig["id"] : "";
-        let fechaCreado = baseConfig && baseConfig["fechaCreado"] ? baseConfig["fechaCreado"] : "";
-        let fechaActualizado = baseConfig && baseConfig["fechaActualizado"] ? baseConfig["fechaActualizado"] : "";
         
-        ModelBase.call(this, id, rev, fechaCreado, fechaActualizado);
         this.errors = {};
     };
     
-    ContribuyenteModel.prototype = Object.create(ModelBase.prototype);
+    ContribuyenteModel.prototype.getModel = function() {
+        return this.model;  
+    };
+    
+    ContribuyenteModel.prototype._addDate = function(isNew) {
+        if (isNew)
+            this.model.fechaCreado = Date.now();
+            
+        this.model.fechaActualizado = Date.now();
+    };
+    
     ContribuyenteModel.prototype.isValid = function (){
         let counter = 0;
         for(let property in this.errors){
@@ -37,6 +45,7 @@ exports.init = function (){
         }
         return counter === 0;
     };
+    
     ContribuyenteModel.prototype.validate = function(){
         this.errors = {};
         if (validator.isStringEmpty(this.rfc))
@@ -71,20 +80,6 @@ exports.init = function (){
         }
         this.errors[field].push(message);
     };
-    
-    
-    ContribuyenteModel.prototype.addDate = function(model, isNew) {
-        if (isNew)
-            model.fechaCreado = Date.now();
-        else {
-            model._id = this.id;
-            model._rev = this.rev;
-        }
-        
-        model.fechaActualizado = Date.now();
-        
-        return model;
-    }
     
     return ContribuyenteModel;
 };
