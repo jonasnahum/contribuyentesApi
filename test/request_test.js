@@ -29,7 +29,55 @@ exports.getPromise_success = function(test){
         test.done();
     });
     
-    
-    
     requestModule.postParams.callback(null, "response", endPoint.model);
+};
+
+exports.getPromise_fail = function(test){
+    test.expect(1);
+    
+    let endPoint = new EndPoint({
+        uri : "contribuyentes",
+        httpMethod : "POST",
+        model: {nombre: "jonas"},
+        headers: {contentType: "application/json"}
+    });
+    
+    let serverInfo = new ServerInfo("http", "contribuyentes.com");
+    let request = new Request();
+    
+    let promise = request.getPromise(serverInfo, endPoint);
+    
+    
+    promise.fail (function (err){
+        test.deepEqual(err, "este es un error" );
+        
+        test.done();
+    });
+    
+    requestModule.postParams.callback("este es un error", "response", endPoint.model);
+};
+
+exports.getPromise_parameters = function(test){
+    test.expect(1);
+    
+    let configExpected = {
+        url: "http://contribuyentes.com/contribuyentes",
+        json: {nombre: "jonas"},
+        headers: {contentType: "application/json"}
+    };
+    
+    let endPoint = new EndPoint({
+        uri : "contribuyentes",
+        httpMethod : "POST",
+        model: {nombre: "jonas"},
+        headers: {contentType: "application/json"}
+    });
+    
+    let serverInfo = new ServerInfo("http", "contribuyentes.com");
+    let request = new Request();
+    
+    let promise = request.getPromise(serverInfo, endPoint);
+    
+    test.deepEqual(requestModule.postParams.config, configExpected);
+    test.done();
 };
