@@ -1,5 +1,5 @@
 "use strict";
-let ModelBase = require ("./modelBase.js").init();
+
 let Validator = require("./validator.js").init();
 let validator = new Validator();
 
