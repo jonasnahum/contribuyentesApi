@@ -19,6 +19,7 @@ exports.init = function (express, db) {
             req.accepts('application/json');
             
             let model = new Model(req.body, true);
+            
             model.validate();
             
             if (!model.isValid()){

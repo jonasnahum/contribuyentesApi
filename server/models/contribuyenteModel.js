@@ -6,10 +6,10 @@ let validator = new Validator();
 exports.init = function (){
     
     let ContribuyenteModel = function (config, isNew) {
-        
-        this._addDate(isNew);
-        
+          
         this.model = config;
+              
+        this._addDate(isNew);
         
         this.rfc = config && config["rfc"] ? config["rfc"] : "";
         this.nombre = config && config["nombre"] ? config["nombre"] : "";
