@@ -43,7 +43,7 @@ exports.init = function () {
             this.data[index] = model;
             deferred.resolve([{statusCode: 200}, model]);
         }else{
-            deferred.reject({statusCode: 404});
+            deferred.reject({code: 404});
         }
         
         return deferred.promise;
@@ -57,7 +57,7 @@ exports.init = function () {
             var model = this.data[index];
             deferred.resolve([{statusCode: 200}, model]);
         }else{
-            deferred.reject({statusCode: 404});
+            deferred.reject({code: 404});
         }
         
         return deferred.promise;
@@ -72,7 +72,7 @@ exports.init = function () {
             this.data.splice(index, 1);
             deferred.resolve([{statusCode: 200}, model]);
         }else{
-            deferred.reject({statusCode: 404});
+            deferred.reject({code: 404});
         }
         
         return deferred.promise;

@@ -25,7 +25,7 @@ Res.prototype.status = function(code) {
     return {
         json: function(body){
             if (that.jsonCallback)
-                that.jsonCallback(body);
+                that.jsonCallback(body);//hacer el test.
         }
     };
 };
@@ -114,4 +114,97 @@ exports.put_success = function (test){
 exports.put_fail = function (test){
     test.expect (1);
     
+    var expected = { error: "bad_gateway", reason: 404 };
+  
+    var req = new Req(null, validModel);
+    req.params.id = 2;
+    req.params.rev = 2;
+    
+    var res = new Res (null, function (error) {
+        test.deepEqual(error, expected);
+        test.done();
+    }); 
+    
+    express.router.putInfo.f(req, res, next);
+};
+
+exports.put_modelNotValid = function(test) {
+    test.expect(1);
+    let modelEmpty = { };
+    
+    var req = new Req(null, modelEmpty);
+    var res = new Res(function(code){
+        test.equal(code, 502);
+        test.done();
+    }, null);
+    
+    //trigger
+    express.router.putInfo.f(req, res, next);
+};
+
+exports.view_success = function (test) {
+    test.expect(1);
+    
+    var expected = validModel;
+    var req = new Req();
+    req.params.id = 1;
+    
+    db.data[0].id = 1;
+    
+    var res = new Res (null, function (body) {
+        test.equal(body, expected);
+        test.done();
+    }); 
+    
+    express.router.getInfo.f(req, res, next);
+};
+
+exports.view_fail = function (test){
+    test.expect (1);
+    
+    var expected = { error: "bad_gateway", reason: 404 };
+  
+    var req = new Req();
+    req.params.id = 3;
+    
+    var res = new Res (null, function (error) {
+        test.deepEqual(error, expected);
+        test.done();
+    }); 
+    
+    express.router.getInfo.f(req, res, next);
+};
+
+exports.delete_success = function (test){
+    test.expect (1);
+    
+    var expected = validModel;
+    
+    var req = new Req();
+    req.params.id = 1;
+    
+    db.data[0].id = 1;
+    
+    var res = new Res (null, function (body) {
+        test.equal(body, expected);
+        test.done();
+    }); 
+    
+    express.router.deleteInfo.f(req, res, next);
+};
+
+exports.delete_fail = function (test){
+    test.expect (1);
+    
+    var expected = { error: "bad_gateway", reason: 404 };
+  
+    var req = new Req();
+    req.params.id = 3;
+    
+    var res = new Res (null, function (error) {
+        test.deepEqual(error, expected);
+        test.done();
+    }); 
+    
+    express.router.deleteInfo.f(req, res, next);
 };
