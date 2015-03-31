@@ -27,7 +27,7 @@
   "homepage": "https://github.com/jonasnahum/contribuyentesApi",
   "dependencies": {
     "express": "^4.11.2",
-    "jimenez-http-communication": "0.0.2",
+    "jimenez-couchdb-endpoints": "0.0.1",
     "node-uuid": "^1.4.2",
     "nodeunit": "^0.9.0",
     "q": "^1.1.2",

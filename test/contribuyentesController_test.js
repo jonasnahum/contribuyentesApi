@@ -2,8 +2,11 @@
 
 const express = require ("./mocks/expressModuleMock.js");
 const Database = require ("./mocks/dbClassMock.js").init();
+const PromiseFactoryMock = require ("./mocks/promiseFactoryMock.js").init();
+let factory = new PromiseFactoryMock();
 let db = new Database();
-const Contribuyentes = require ("./../server/routes/contribuyentes.js").init(express, db);
+const Contribuyentes = require ("./../server/routes/contribuyentes.js").init(express, db, factory);
+const jce = require("jimenez-couchdb-endpoints");
 
 let controller = new Contribuyentes();
 let Req = function(accepts, body) {
