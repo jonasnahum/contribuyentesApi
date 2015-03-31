@@ -1,12 +1,12 @@
 "use strict";
 
-exports.init = function (express, db) {
+exports.init = function (express, db, promiseFactory) {
     var jce = require("jimenez-couchdb-endpoints");
     var Model = require("./../models/contribuyenteModel.js").init();
     
     express = express || require('express');
     db = db || new jce.Database("contribuyentes");
-    var factory = new jce.PromiseFactory(); 
+    var factory = promiseFactory || new jce.PromiseFactory(); 
     
     var ContribuyentesController = function() {
         this.router = express.Router();
