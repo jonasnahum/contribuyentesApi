@@ -1,11 +1,12 @@
 "use strict";
 
 exports.init = function (express, db) {
-    var Database = require("jimenez-http-communication").Database;
+    var jce = require("jimenez-couchdb-endpoints");
     var Model = require("./../models/contribuyenteModel.js").init();
     
     express = express || require('express');
-    db = db || new Database("contribuyentes");
+    db = db || new jce.Database("contribuyentes");
+    var factory = new jce.PromiseFactory(); 
     
     var ContribuyentesController = function() {
         this.router = express.Router();
@@ -27,7 +28,8 @@ exports.init = function (express, db) {
                 return;
             } 
             
-            let promise = db.save(model.getModel());
+            let endpoint = db.save(model.getModel());
+            let promise = factory.getPromise(endpoint);
             
             promise.then(function(args) {
                 let couchRes = args[0], body = args[1];
@@ -54,7 +56,8 @@ exports.init = function (express, db) {
                 return;
             }
             
-            var promise = db.update(model.getModel(), req.params.id, req.params.rev);
+            var endpoint = db.update(model.getModel(), req.params.id, req.params.rev);
+            var promise = factory.getPromise(endpoint);
             
             promise.then(function(args) {
                 var couchRes = args[0], body = args[1];
@@ -69,7 +72,8 @@ exports.init = function (express, db) {
         /* GET obtiene un contribuyente por su id. */
         this.router.get('/ver/:id', function(req, res, next) {
             
-            var promise = db.view(req.params.id);
+            var endpoint = db.view(req.params.id);
+            var promise = factory.getPromise(endpoint);
             
             promise.then(function(args) {
                 var couchRes = args[0], body = args[1];
@@ -84,7 +88,8 @@ exports.init = function (express, db) {
         /* DELETE borra un contribuyente dado su id y rev. */
         this.router.delete('/borrar/:id/:rev', function(req, res, next) {
             
-            var promise = db.delete(req.params.id, req.params.rev);
+            var endpoint = db.delete(req.params.id, req.params.rev);
+            var promise = factory.getPromise(endpoint);
             
             promise.then(function(args) {
                 var couchRes = args[0], body = args[1];
