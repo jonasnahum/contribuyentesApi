@@ -1,11 +1,11 @@
 "use strict";
 
-let Validator = require("./validator.js").init();
-let validator = new Validator();
+var Validator = require("./validator.js").init();
+var validator = new Validator();
 
 exports.init = function (){
     
-    let ContribuyenteModel = function (config, isNew) {
+    var ContribuyenteModel = function (config, isNew) {
           
         this.model = config;
               
@@ -39,8 +39,8 @@ exports.init = function (){
     };
     
     ContribuyenteModel.prototype.isValid = function (){
-        let counter = 0;
-        for(let property in this.errors){
+        var counter = 0;
+        for(var property in this.errors){
             counter++;
         }
         return counter === 0;

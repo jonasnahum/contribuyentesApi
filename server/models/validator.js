@@ -1,6 +1,6 @@
 "use strict";
 exports.init = function (){
-    let Validator = function(){
+    var Validator = function(){
         
     };
     Validator.prototype.isStringEmpty = function (text){

@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var http = require("http");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -61,3 +62,22 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+ 
+
+    app.listen(3000, function(){//app.get('port')
+        console.info('Express server listening on port ' + 3000);
+});
+//}
+//var shutdown = function() {
+//    server.close();
+//}
+
+//if (require.main === module) {
+//    boot();
+//} else {
+//    console.info('Running app as a module');
+//    exports.boot = boot;
+//    exports.shutdown = shutdown;
+//    exports.port = app.get('port');
+//}
+ 

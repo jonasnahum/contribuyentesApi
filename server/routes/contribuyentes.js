@@ -1,12 +1,12 @@
 "use strict";
 
-exports.init = function (express, db, promiseFactory) {
+exports.init = function () {
     var jce = require("jimenez-couchdb-endpoints");
     var Model = require("./../models/contribuyenteModel.js").init();
     
-    express = express || require('express');
-    db = db || new jce.Database("contribuyentes");
-    var factory = promiseFactory || new jce.PromiseFactory(); 
+    var express = require('express');
+    var db = jce.database("contribuyentes");
+    var factory = jce.promiseFactory(); 
     
     var ContribuyentesController = function() {
         this.router = express.Router();
@@ -16,23 +16,25 @@ exports.init = function (express, db, promiseFactory) {
     ContribuyentesController.prototype.register = function () {
         /* POST crea un nuevo contribuyente. */
         this.router.post('/crear', function(req, res, next) {
-
+            
             req.accepts('application/json');
             
-            let model = new Model(req.body, true);
+            var model = new Model(req.body, true);
             
-            model.validate();
+            //model.validate();
             
-            if (!model.isValid()){
-                res.status(502).json(model.errors);
-                return;
-            } 
+            //if (!model.isValid()){
+            //    res.status(502).json(model.errors);
+            //    return;
+            //} 
             
-            let endpoint = db.save(model.getModel());
-            let promise = factory.getPromise(endpoint);
+            var endpoint = db.save(model.getModel());
+            var promise = factory.getPromise(endpoint);
+            
+            res.send("se ha entrado a /crear");
             
             promise.then(function(args) {
-                let couchRes = args[0], body = args[1];
+                var couchRes = args[0], body = args[1];
                 res.status(couchRes.statusCode).json(body);
             });
             
